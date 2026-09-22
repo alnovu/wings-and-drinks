@@ -22,7 +22,7 @@ export default function StorePage() {
 
   // Estado del buscador individual
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<Record<string, unknown>[]>([]);
+  const [searchResults, setSearchResults] = useState<any[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [customBrands, setCustomBrands] = useState<Marca[]>([]);
   const [loadingBrandId, setLoadingBrandId] = useState<string | null>(null);
