@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const API_KEY = "Bearer vFWM3OFhE0xbFz-aqM8jB8RLf5eyYIlNqNcBEd0GS9v5FVbNTZTaomWu45mw5DIFvL8ZQDpabtjuvRNCQobnGg";
+const API_KEY = process.env.BRANDFETCH_API_KEY || "";
 
 // GET: Buscar marcas por nombre
 export async function GET(request: Request) {
