@@ -19,10 +19,10 @@ export default function AdivinaMarcaMenu() {
         counts[cat] = (counts[cat] || 0) + 1;
       }
     };
-    
+
     // Categorías base
     marcas.forEach(m => addCount(m.categoria));
-    
+
     try {
       // Categorías de paquetes instalados
       const installedStr = localStorage.getItem("installed_packages");
@@ -36,7 +36,7 @@ export default function AdivinaMarcaMenu() {
           }
         });
       }
-      
+
       // Categorías custom (Personalizadas)
       const customStr = localStorage.getItem("custom_marcas");
       if (customStr) {
@@ -46,7 +46,7 @@ export default function AdivinaMarcaMenu() {
     } catch (e) {
       console.error(e);
     }
-    
+
     const uniqueCategories = Object.keys(counts).sort();
     setAvailableCategories(uniqueCategories);
     setCategoryStats(counts);
@@ -65,7 +65,7 @@ export default function AdivinaMarcaMenu() {
     const newActive = activeCategories.includes(cat)
       ? activeCategories.filter(c => c !== cat)
       : [...activeCategories, cat];
-    
+
     setActiveCategories(newActive);
     localStorage.setItem("active_categories", JSON.stringify(newActive));
   };
@@ -82,21 +82,21 @@ export default function AdivinaMarcaMenu() {
 
   return (
     <main className="relative flex h-[100dvh] flex-col items-center p-6 bg-black text-white overflow-hidden">
-      
+
       {/* Glow ambientales en el fondo */}
       <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[80vw] h-[50vw] rounded-full bg-pink-600/10 blur-[150px] pointer-events-none" />
 
       <div className="w-full max-w-4xl flex flex-col h-full relative z-10">
-        
+
         {/* Header / Back button (Fijo arriba) */}
         <div className="flex items-center justify-between w-full shrink-0">
-          <Link 
+          <Link
             href="/"
             className="p-3 bg-white/5 hover:bg-white/10 rounded-2xl backdrop-blur-md transition-all border border-white/10 group"
           >
             <ArrowLeft className="w-6 h-6 text-white/70 group-hover:text-white transition-colors" />
           </Link>
-          <button 
+          <button
             onClick={() => setIsSettingsOpen(true)}
             className="p-3 bg-white/5 hover:bg-white/10 rounded-2xl backdrop-blur-md transition-all border border-white/10 group"
           >
@@ -106,7 +106,7 @@ export default function AdivinaMarcaMenu() {
 
         {/* Contenedor principal que se adapta a vertical / horizontal */}
         <div className="flex-1 flex flex-col landscape:flex-row items-center justify-center gap-6 landscape:gap-12 w-full mt-4">
-          
+
           {/* Game Title & Branding (Mitad Izquierda en landscape) */}
           <div className="flex-1 flex flex-col items-center justify-center text-center space-y-4 landscape:space-y-6">
             <div className="relative inline-block">
@@ -127,7 +127,7 @@ export default function AdivinaMarcaMenu() {
 
           {/* Action Buttons (Mitad Derecha en landscape) */}
           <div className="flex-1 w-full max-w-sm flex flex-col justify-center gap-4 shrink-0">
-            <Link 
+            <Link
               href="/games/adivina-marca/play"
               onClick={(e) => {
                 if (activeCategories.length === 0) {
@@ -142,8 +142,8 @@ export default function AdivinaMarcaMenu() {
               <Play className="w-7 h-7 fill-black relative z-10" />
               <span className="relative z-10 tracking-tight">JUGAR AHORA</span>
             </Link>
-            
-            <Link 
+
+            <Link
               href="/games/adivina-marca/store"
               className="group w-full flex items-center justify-center gap-3 bg-white/5 hover:bg-white/10 text-white font-semibold text-sm md:text-base py-4 rounded-2xl transition-all border border-white/10 active:scale-[0.98]"
             >
@@ -153,11 +153,8 @@ export default function AdivinaMarcaMenu() {
               </span>
             </Link>
 
-            <button className="w-full flex items-center justify-center gap-2 text-white/30 hover:text-white/60 font-medium text-xs md:text-sm py-2 transition-colors">
-              <Info className="w-4 h-4" /> Cómo Jugar
-            </button>
           </div>
-          
+
         </div>
       </div>
 
@@ -165,37 +162,37 @@ export default function AdivinaMarcaMenu() {
       {isSettingsOpen && (
         <div className="absolute inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-md animate-in fade-in duration-300">
           <div className="bg-[#111] border border-white/10 w-full max-w-md rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-300 max-h-full">
-            
+
             <div className="flex items-center justify-between p-6 border-b border-white/5">
               <h2 className="text-xl font-bold">Seleccionar Barajas</h2>
-              <button 
+              <button
                 onClick={() => setIsSettingsOpen(false)}
                 className="p-2 bg-white/5 hover:bg-white/10 rounded-full transition-colors"
               >
                 <X className="w-5 h-5 text-white/70" />
               </button>
             </div>
-            
+
             <div className="p-6 overflow-y-auto flex-1 space-y-3">
               <p className="text-sm text-white/40 mb-2">
                 Elige qué categorías quieres incluir en la ruleta de marcas.
               </p>
 
               <div className="flex gap-2 mb-4">
-                <button 
+                <button
                   onClick={selectAll}
                   className="flex-1 py-2.5 bg-white/10 hover:bg-white/20 rounded-xl text-xs font-bold transition-colors text-white"
                 >
                   Seleccionar Todas
                 </button>
-                <button 
+                <button
                   onClick={deselectAll}
                   className="flex-1 py-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-xs font-bold transition-colors text-white/70 hover:text-white"
                 >
                   Deseleccionar Todas
                 </button>
               </div>
-              
+
               {availableCategories.map((cat) => {
                 const isActive = activeCategories.includes(cat);
                 const count = categoryStats[cat] || 0;
@@ -203,11 +200,10 @@ export default function AdivinaMarcaMenu() {
                   <button
                     key={cat}
                     onClick={() => toggleCategory(cat)}
-                    className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all border ${
-                      isActive 
-                        ? "bg-pink-500/10 border-pink-500/30" 
+                    className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all border ${isActive
+                        ? "bg-pink-500/10 border-pink-500/30"
                         : "bg-white/5 border-transparent hover:bg-white/10"
-                    }`}
+                      }`}
                   >
                     <div className="flex flex-col items-start">
                       <span className={`font-semibold ${isActive ? "text-pink-100" : "text-white/60"}`}>
@@ -217,7 +213,7 @@ export default function AdivinaMarcaMenu() {
                         {count} {count === 1 ? 'marca' : 'marcas'}
                       </span>
                     </div>
-                    
+
                     {/* iOS-like Switch */}
                     <div className={`w-12 h-6 rounded-full transition-colors relative ${isActive ? "bg-pink-500" : "bg-white/20"}`}>
                       <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform ${isActive ? "left-7" : "left-1"}`} />
